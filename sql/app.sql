@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Jan 09, 2011 at 04:28 PM
+-- Generation Time: Jan 11, 2011 at 04:05 PM
 -- Server version: 5.1.37
 -- PHP Version: 5.3.0
 
@@ -27,11 +27,6 @@ SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 
 CREATE TABLE IF NOT EXISTS `apps` (
   `ID` bigint(12) unsigned NOT NULL AUTO_INCREMENT,
-  `post_date` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
-  `post_modified` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
-  `rank_history` longtext NOT NULL,
-  `current_rank` smallint(6) NOT NULL DEFAULT '-1',
-  `rank_diff` smallint(3) NOT NULL DEFAULT '0',
   `post_title` text NOT NULL,
   `post_content` longtext NOT NULL,
   `app_price` varchar(32) NOT NULL DEFAULT 'Free',
@@ -92,6 +87,8 @@ CREATE TABLE IF NOT EXISTS `ranks` (
   `genre_id` smallint(5) unsigned NOT NULL DEFAULT '0',
   `app_id` smallint(5) unsigned NOT NULL,
   `ranks` longtext NOT NULL,
+  `current_rank` varchar(32) NOT NULL DEFAULT '-1',
+  `update_timestamp` varchar(32) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
