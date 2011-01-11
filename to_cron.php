@@ -1,7 +1,10 @@
 <?php 
 require_once('connect.php');
 require_once('functions/functions.php');
+$time=new DateTime();
+$unique_timestamp=$time->getTimeStamp();	
 $counter=0;
+
 
 //Data in Url
 $feedType=array('topfreeapplications','toppaidapplications','topgrossingapplications','topfreeipadapplications','toppaidipadapplications','topgrossingipadapplications','newapplications','newfreeapplications','newpaidapplications');
@@ -63,7 +66,7 @@ $parser=new DOMDocument();
 $parser->load('top.xml');
 if(preg_match('/<feed+[^>]+>/',$parser->saveXML(),$a))$feedString=$a[0];
 
-echo $parser->documentURI;
+$parser->documentURI;
 $nURI=$parser->getElementsByTagName('feed')->item(0)->getAttribute('xmlns:im');
 echo '<br/>';
 
@@ -89,8 +92,8 @@ $rankCounter++;
   //$appTitle=$eParser->getElementsByTagName('title')->item(0)->nodeValue; 
   //$appTitle=reform_title($appTitle);
   $appSummary=$eParser->getElementsByTagName('summary')->item(0)->nodeValue;
-  echo reform_title($appSummary);
-  echo $sep;
+  reform_title($appSummary);
+  $sep;
   $appSummary=mysql_real_escape_string($appSummary); 
  $appContent=$eParser->getElementsByTagName('content')->item(0)->nodeValue;  
  
@@ -104,7 +107,7 @@ foreach($data as $single):
  endforeach;
 
 
-echo $image.'<br/>';
+
  
  $query="insert into apps(post_title,post_content,app_image,app_price,app_artist) 
  values('$name','$appSummary','$image','$price','$artist')";
@@ -125,17 +128,19 @@ if(in_table_multiple('ranks',array(
                               )):
  $query="select ranks from ranks where app_id='$app_id' and genre_id='$genreCounter' and feed_id='$feedCounter'";
  $result=mysql_query($query) or die(mysql_error());
+    $query="update ranks set current_rank='$rankCounter' where app_id='$app_id' and genre_id='$genreCounter' and feed_id='$feedCounter'";
+	mysql_query($query) or die(mysql_error());
  
 	 if(mysql_num_rows($result)!=0):
 	 $ranks=mysql_result($result,0);
-	 $ranks=$ranks.','.$rankCounter;
-	 $query="update ranks set ranks='$ranks' where app_id='$app_id'";
-	 mysql_query($query) or die(mysql_error());
-	 
-    endif;
+	 $newRank=$rankCounter.','.gmdate('Y-m-d H:i:s');
+	 $ranks=$ranks.';'.$newRank;
+	 $query="update ranks set ranks='$ranks',update_timestamp='$unique_timestamp' where app_id='$app_id' and genre_id='$genreCounter' and feed_id='$feedCounter'";
+	 mysql_query($query) or die(mysql_error());    endif;
  
 else:
-$query="insert into ranks(feed_id,genre_id,app_id,ranks) values('$feedCounter','$genreCounter','$app_id','$rankCounter')";
+$newRank=$rankCounter.','.gmdate('Y-m-d H:i:s');
+$query="insert into ranks(feed_id,genre_id,app_id,ranks,current_rank,update_timestamp) values('$feedCounter','$genreCounter','$app_id','$newRank','$rankCounter','$unique_timestamp')";
 mysql_query($query) or die(mysql_error());
 
 endif;
@@ -146,4 +151,9 @@ endif;
 endforeach;//end of each 'entry' foreach
 endforeach;// end of genre foreach
 endforeach;// end of feedtype
+
+
+$query="update ranks set current_rank=-1 where update_timestamp!='$unique_timestamp'";
+mysql_query($query) or die(mysql_error());
+
 

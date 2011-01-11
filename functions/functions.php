@@ -57,6 +57,8 @@ $result = mysql_query("SELECT * FROM $table") or die(mysql_error());
 $trigger=0;
 while($row=mysql_fetch_array($result,MYSQL_ASSOC)){
 array_pop($row);
+array_pop($row);
+array_pop($row);
 array_shift($row);
 if($array==$row)$trigger=1;
 }

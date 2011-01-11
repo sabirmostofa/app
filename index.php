@@ -29,7 +29,7 @@ endwhile;
 
 <?php
 
-$query="select apps.post_title,ranks.ranks from apps inner join ranks on ranks.app_id=apps.id where ranks.feed_id=1";
+$query="select apps.post_title,ranks.ranks from apps inner join ranks on ranks.app_id=apps.id  where ranks.feed_id=1 and ranks.genre_id=1 and ranks.current_rank!=-1 order by ranks.current_rank";
 $result=mysql_query($query) or die(mysql_error());
 
 while($array=mysql_fetch_assoc($result)):
@@ -42,7 +42,5 @@ echo 'posted';
 var_dump($_POST);
 endif;
 
-$a= array('key'=>1,2,3);
-$b=array(1,2,3);
-if($a==$b)echo 'matched';
+
 ?>
