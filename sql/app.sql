@@ -87,8 +87,8 @@ CREATE TABLE IF NOT EXISTS `ranks` (
   `genre_id` smallint(5) unsigned NOT NULL DEFAULT '0',
   `app_id` smallint(5) unsigned NOT NULL,
   `ranks` longtext NOT NULL,
-  `current_rank` varchar(32) NOT NULL DEFAULT '-1',
-  `update_timestamp` varchar(32) NOT NULL,
+  `current_rank` smallint(5) NOT NULL DEFAULT '-1',
+  `update_timestamp` bigint unsigned NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
