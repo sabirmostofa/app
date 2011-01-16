@@ -65,3 +65,12 @@ if($array==$row)$trigger=1;
 if($trigger==0)return 0;
 else return 1;
 }
+
+
+function ftpUpload($file,$url){
+global $conn_id;
+global $image_dir;
+$file=$image_dir.$file;
+// upload a file
+ftp_put($conn_id, $file, $url,FTP_BINARY);
+}

@@ -3,6 +3,8 @@ require_once('connect.php');
 require_once('functions/functions.php');
 require_once('header.php');
 ?>
+
+
 <select name='feed_selector' id='fselector'>
 <?php
 $query='select feedtype from feeds';
@@ -23,12 +25,27 @@ endwhile;
 
 ?>
 </select>
+
+<select name='post_number' id='pselector'>
+<option>20</option>
+<option>25</option>
+<option>30</option>
+<option>50</option>
+<option>100</option>
+</select>
 <input type='button' name='form-submit' id= 'fsubmit' value='View the apps'/>
+
+<div class='pagination'>
+<?php for($i=1;$i<16;$i++):?>
+<input type='button' style='float:left;margin-left:5px;' class='paginator' value='<?php  echo $i; ?>'/>
+<?php endfor; ?>
+</div>
+<div class='clearBoth'></div>
 
 
 <?php
 
-
+ 
 
 
 
@@ -36,3 +53,9 @@ endwhile;
 
 ?>
 <div id='ajax_return'></div>
+<div class='pagination'>
+<?php for($i=1;$i<16;$i++):?>
+<input type='button' style='float:left;margin-left:5px;' class='paginator' value='<?php  echo $i; ?>'/>
+<?php endfor; ?>
+</div>
+

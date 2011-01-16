@@ -8,6 +8,7 @@
 	<link rel='stylesheet' href="css/style.css"/>
 <script src="js/jquery-1.4.4.js" type="text/javascript"></script>
 <script src="js/custom.js" type="text/javascript"></script>
+<link rel='stylesheet' href='style.css'/>
 </head>
 
 <body>
@@ -15,3 +16,6 @@
 <div id='header'>
 
 </div>
+<!--
+<div id='loadingDiv'><image src='images/loading.gif'/></div>
+-->

@@ -1,6 +1,7 @@
 <?php 
 require_once('connect.php');
 require_once('functions/functions.php');
+set_time_limit(30*60);
 $time=new DateTime();
 $unique_timestamp=$time->getTimeStamp();	
 $counter=0;
