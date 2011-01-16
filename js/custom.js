@@ -2,6 +2,15 @@
 $(document).ready(function(){
 	$('.pagination').hide();
 	$('#fsubmit').click(function(){
+			$('.paginator').each(function(){
+				if($(this).attr('value')==1){
+					$(this).css('background-color','green');
+					
+					}
+				else
+				$(this).css('background-color','');
+				
+				});
 		
 		$.get('process.php',{'feed':$('#fselector option:selected').text(),'genre':$('#gselector option:selected').text(),'number':$('#pselector option:selected').text()},function(data){
 			$('#ajax_return').html(data);			
