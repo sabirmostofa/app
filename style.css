@@ -1,0 +1,60 @@
+
+*{
+margin:0;
+padding:0;
+}
+
+#ajax_return{
+width:800px;
+margin:0 auto;
+}
+#ajax-content li{
+
+margin-bottom:20px;
+border:1px solid black;
+padding:5px;
+}
+
+.holder{
+padding:5px;
+margin-left:120px;
+}
+.content{
+display:inline;
+margin-top:10px;
+
+}
+
+.round{
+-moz-border-radius: 8px;
+-webkit-border-radius: 8px;
+border-radius: 8px;
+}
+.clearBoth{
+clear:both;
+}
+.pagination{
+margin-left:100px;
+width:550px;
+text-align:center;
+}
+.paginator{
+width:30px;
+
+}
+
+.read-more{
+display:inline;
+}
+
+.more{
+display:inline;
+color:blue;
+}
+.more:hover{
+cursor:pointer;
+
+}
+
+
+

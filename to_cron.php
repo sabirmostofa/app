@@ -7,6 +7,7 @@ $unique_timestamp=$time->getTimeStamp();
 $counter=0;
 
 
+
 //Data in Url
 $feedType=array('topfreeapplications','toppaidapplications','topgrossingapplications','topfreeipadapplications','toppaidipadapplications','topgrossingipadapplications','newapplications','newfreeapplications','newpaidapplications');
 
@@ -109,35 +110,27 @@ foreach($data as $single):
 
 
 
- 
+if(!in_table('post_title','apps',$name)):
  $query="insert into apps(post_title,post_content,app_image,app_price,app_artist) 
  values('$name','$appSummary','$image','$price','$artist')";
- 
-if(!in_table('post_title','apps',$name))
 mysql_query($query) or die(mysql_error());
+endif;
 
 
 //populating the ranks table
  $query="select ID from apps where post_title='$name'";
  $app_id=mysql_result(mysql_query($query),0);
 
-if(in_table_multiple('ranks',array(
-                            'feed_id'=>$feedCounter,
-                             'genre_id'=>$genreCounter,
-                             'app_id'=>$app_id                             
-                              )
-                              )):
+if(in_table_multiple('ranks',$feedCounter,$genreCounter,$app_id)):
  $query="select ranks from ranks where app_id='$app_id' and genre_id='$genreCounter' and feed_id='$feedCounter'";
- $result=mysql_query($query) or die(mysql_error());
-    $query="update ranks set current_rank='$rankCounter' where app_id='$app_id' and genre_id='$genreCounter' and feed_id='$feedCounter'";
-	mysql_query($query) or die(mysql_error());
- 
+ $result=mysql_query($query) or die(mysql_error()); 
 	 if(mysql_num_rows($result)!=0):
 	 $ranks=mysql_result($result,0);
 	 $newRank=$rankCounter.','.gmdate('Y-m-d H:i:s');
 	 $ranks=$ranks.';'.$newRank;
-	 $query="update ranks set ranks='$ranks',update_timestamp='$unique_timestamp' where app_id='$app_id' and genre_id='$genreCounter' and feed_id='$feedCounter'";
-	 mysql_query($query) or die(mysql_error());    endif;
+	 $query="update ranks set ranks='$ranks',current_rank='$rankCounter',update_timestamp='$unique_timestamp' where app_id='$app_id' and genre_id='$genreCounter' and feed_id='$feedCounter'";
+	 mysql_query($query) or die(mysql_error());    
+	 endif;
  
 else:
 $newRank=$rankCounter.','.gmdate('Y-m-d H:i:s');

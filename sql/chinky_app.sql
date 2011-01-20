@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 3.2.0.1
+-- version 3.3.8.1
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Jan 11, 2011 at 04:05 PM
--- Server version: 5.1.37
--- PHP Version: 5.3.0
+-- Generation Time: Jan 18, 2011 at 11:56 PM
+-- Server version: 5.1.52
+-- PHP Version: 5.2.4
 
 SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 
@@ -16,7 +16,7 @@ SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 /*!40101 SET NAMES utf8 */;
 
 --
--- Database: `app`
+-- Database: `chinky_app`
 --
 
 -- --------------------------------------------------------
@@ -32,7 +32,8 @@ CREATE TABLE IF NOT EXISTS `apps` (
   `app_price` varchar(32) NOT NULL DEFAULT 'Free',
   `app_image` text NOT NULL,
   `app_artist` text NOT NULL,
-  PRIMARY KEY (`ID`)
+  PRIMARY KEY (`ID`),
+  KEY `post_title` (`post_title`(10))
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
 --
@@ -68,7 +69,7 @@ CREATE TABLE IF NOT EXISTS `genres` (
   `genre_id` int(11) NOT NULL,
   `genre_name` varchar(64) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=22 ;
 
 --
 -- Dumping data for table `genres`
@@ -88,8 +89,13 @@ CREATE TABLE IF NOT EXISTS `ranks` (
   `app_id` smallint(5) unsigned NOT NULL,
   `ranks` longtext NOT NULL,
   `current_rank` smallint(5) NOT NULL DEFAULT '-1',
-  `update_timestamp` bigint unsigned NOT NULL,
-  PRIMARY KEY (`id`)
+  `update_timestamp` bigint(20) unsigned NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `feed_id` (`feed_id`),
+  KEY `genre_id` (`genre_id`),
+  KEY `app_id` (`app_id`),
+  KEY `update_timestamp` (`update_timestamp`),
+  KEY `current_rank` (`current_rank`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
 --

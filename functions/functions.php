@@ -43,34 +43,25 @@ return $string;
 }
 
 function in_table($column,$table,$data){
-$result = mysql_query("SELECT $column FROM $table") or die(mysql_error());
-$trigger=0;
-while($row=mysql_fetch_array($result,MYSQL_ASSOC)){
-if(in_array($data,$row))$trigger=1;
-}
-if($trigger==0)return 0;
-else return 1;
+$result = mysql_query("SELECT count(*) FROM $table where $column='$data'") or die(mysql_error());
+$row=mysql_fetch_row($result);
+if($row[0]>0)return 1;
+return 0;
 }
 
-function in_table_multiple($table,array $array){
-$result = mysql_query("SELECT * FROM $table") or die(mysql_error());
-$trigger=0;
-while($row=mysql_fetch_array($result,MYSQL_ASSOC)){
-array_pop($row);
-array_pop($row);
-array_pop($row);
-array_shift($row);
-if($array==$row)$trigger=1;
-}
-if($trigger==0)return 0;
-else return 1;
+function in_table_multiple($table,$feed,$genre,$app){	
+$query="SELECT count(*) FROM $table where feed_id='$feed' and genre_id='$genre' and app_id='$app'";
+$result = mysql_query($query) or die(mysql_error());
+$row=mysql_fetch_row($result);
+if($row[0]>0)return 1;
+return 0;
 }
 
 
 function ftpUpload($file,$url){
 global $conn_id;
-global $image_dir;
-$file=$image_dir.$file;
+global $xml_dir;
+$file=$xml_dir.$file;
 // upload a file
 ftp_put($conn_id, $file, $url,FTP_BINARY);
 }

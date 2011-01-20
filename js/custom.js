@@ -1,7 +1,9 @@
 
 $(document).ready(function(){
+	
 	$('.pagination').hide();
 	$('#fsubmit').click(function(){
+		$('.pagination').hide();
 			$('.paginator').each(function(){
 				if($(this).attr('value')==1){
 					$(this).css('background-color','green');
@@ -25,6 +27,7 @@ $(document).ready(function(){
 	
 	
 	$('.paginator').click(function(){
+		$('.pagination').hide();		
 		var counter=$(this).attr('value');
 			$.get('process.php',{'feed':$('#fselector option:selected').text(),'genre':$('#gselector option:selected').text(),'page':counter},function(data){
 			$('#ajax_return').html(data);			
@@ -47,12 +50,28 @@ $(document).ready(function(){
 	
 	
 	
-	/*
-	ajaxStart(function() {
-        $(this).show();
-    }).ajaxStop(function() {
-        $(this).hide();
-    });
-*/
+
+$('#ajax_return').ajaxStop(function(){
+$('.read-more').hide();
+
+$('.more').click(function(){	
+$(this).prev().append($(this).next('.read-more').text());
+$(this).hide();
+});
+
+var counter=$('#ajax-content').attr('class');
+var page =counter/20;
+
+	$('.paginator').each(function(){
+		if($(this).attr('id')<page)$(this).hide();		
+		});
+	
+});
+
+
+
+
+
+
 
 	});
